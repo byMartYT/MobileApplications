@@ -16,20 +16,18 @@ void main() {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                padding: const EdgeInsets.only(
-                  top: 20,
-                  bottom: 20,
-                  left: 10,
-                  right: 10,
-                ),
+                height: 100,
+                width: 200,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.deepOrange,
                   border: Border.all(color: Colors.black, width: 5),
                 ),
-                child: Text(
-                  'Welcome',
-                  style: TextStyle(color: Colors.white, fontSize: 40),
+                child: Center(
+                  child: Text(
+                    'Welcome',
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
                 ),
               ),
               Row(
@@ -88,8 +86,8 @@ void main() {
               ),
 
               Container(
-                padding: const EdgeInsets.all(10),
                 width: 300,
+                height: 200,
                 decoration: BoxDecoration(
                   color: Color(0xFF173C69),
                   border: Border.all(color: Colors.grey, width: 2),
