@@ -34,11 +34,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Map<String, dynamic> _data = {};
+  bool _isLoading = true; // Ladezustand hinzufügen
 
   void _loadData() async {
     _data = await loadJsonFromAssets(
       'assets/data/mobile-apps-portfolio-03-recipes.json',
     );
+    setState(() {
+      _isLoading = false; // Ladezustand aktualisieren
+    });
   }
 
   Future<Map<String, dynamic>> loadJsonFromAssets(String filePath) async {
@@ -47,6 +51,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Set<String> _categories(Map<String, dynamic> data) {
+    if (data['recipes'] == null) {
+      return {};
+    } // Sicherstellen, dass keine Null-Werte verarbeitet werden
     return data['recipes']
         .map<String>((recipe) => recipe['category'] as String)
         .toSet();
@@ -56,6 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Map<String, dynamic> data,
     String category,
   ) {
+    if (data['recipes'] == null) {
+      return {};
+    } // Sicherstellen, dass keine Null-Werte verarbeitet werden
     return data['recipes']
         .where((recipe) => recipe['category'] == category)
         .map<Map<String, dynamic>>((recipe) => recipe as Map<String, dynamic>)
@@ -65,9 +75,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     _loadData();
+    if (_isLoading) {
+      // Ladeanzeige anzeigen, solange die Daten geladen werden
+      return Scaffold(
+        appBar: AppBar(title: Text(widget.title)),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
     return CategoryScreen(
       recipesOfCategory: (String cat) => _recipesOfCategory(_data, cat),
+      categories: _categories(_data),
     );
   }
 }

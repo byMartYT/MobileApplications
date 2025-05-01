@@ -3,10 +3,13 @@ import 'package:exercise3/components/list_view.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatelessWidget {
-  static const List<String> categorys = ['italian', 'indian', 'turkish'];
+  const CategoryScreen({
+    super.key,
+    required this.recipesOfCategory,
+    required this.categories,
+  });
 
-  const CategoryScreen({super.key, required this.recipesOfCategory});
-
+  final Set<String> categories;
   final Set<Map<String, dynamic>> Function(String) recipesOfCategory;
 
   @override
@@ -18,7 +21,7 @@ class CategoryScreen extends StatelessWidget {
       ),
       body: StyledListView(
         children: <Widget>[
-          ...categorys.map(
+          ...categories.map(
             (cat) => CategoryItem(
               category: cat,
               recipesOfCategory: recipesOfCategory,
